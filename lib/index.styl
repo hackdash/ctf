@@ -1,0 +1,129 @@
+@import "nib/vendor";
+
+body,button,h1,h2,h3,h4,input,pre,select,textarea,th {
+  font: 16px/1.5em monospace;
+}
+body,form,h1,h2,h3,h4,button,input,ul,li,ol,p,select,td,textarea,th {
+  background: none
+  border: none
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+}
+ul {
+  margin: 0 normal
+}
+table {
+  border-collapse: collapse
+}
+img {
+  border: 0;
+}
+
+body, input, button, option, select, textarea
+  color: #fff
+body
+  background: #000
+input, textarea
+  background: 0
+input, select, .title
+  display: block
+  padding: 0 .5em
+input, select
+  width: 100%
+input, select
+  height: 3em
+input:invalid
+  box-shadow: none
+button:hover, .settings-toggle:hover
+  cursor: pointer
+input[disabled]:hover, select[disabled]:hover
+  background: none
+input:hover, button:hover, select:hover, .settings-toggle span:hover
+  background: rgba(0,0,0,.2)
+input:focus, button:focus, select:focus
+  background: rgba(0,0,0,.5)
+  border: 0
+  outline: 0
+option:hover
+  background: none
+a
+  color: #0ff
+li
+  margin: 8px 0
+  clear: both
+html, body, .page, .messages
+  height: 100%
+  margin: 0
+
+.connection
+  position: absolute
+  text-align: center
+  top: 0
+  left: 0
+  width: 100%
+  height: 0
+  z-index: 99
+.connection > .alert
+  background: #008
+  border: 1px solid #999
+  border-top: 0
+  border-radius: 0 0 3px 3px
+  display: inline-block
+  line-height: 21px
+  padding: 0 12px
+
+.page
+  background: #000
+  display: flex
+  flex-flow: column
+  width: 100%;
+.messages
+  flex-grow: 1
+  overflow-y: auto
+.message
+  background: #222
+  padding: .5em
+.user
+  background: rgba(0,0,0,.5)
+.bg-red
+  background-color: #200;
+.bg-green
+  background-color: #020;
+.bg-admin
+  background-color: #002;
+.bg-neutral
+  background-color: #111;
+.color-red
+  color: #f00;
+.color-green
+  color: #0f0;
+.color-admin
+  color: #08f;
+.color-neutral
+  color: #fff;
+.topic, .foot
+  flex-shrink: 0
+.topic
+  border-bottom: .5rem solid #222
+.foot
+  border-top: .5rem solid #222
+.flex
+  display: flex
+.title, .settings-toggle, #toggle-fullscreen
+  line-height: 3rem
+  background: #222
+  flex-shrink: 0
+.settings-false .settings
+  display: none
+.settings-toggle
+  font-size: 3em
+.settings-toggle input
+  display: none
+.settings-toggle span
+  display: inline-block
+  width: 1em
+  text-align: center
+  color: #888
+.settings-toggle input:checked + span
+  background: #444

@@ -1,0 +1,5 @@
+.DS_Store
+*.swp
+serialized/
+/node_modules
+reqlog.txt

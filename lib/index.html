@@ -1,0 +1,109 @@
+<Title:>
+  Capture the Flag
+
+<Head:>
+  <meta name="viewport" content="width=device-width">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" sizes="128x128" href="/img/flag.png">
+
+<Body:>
+  <view name="d-connection-alert"></view>
+  <view name="d-before-unload"></view>
+  <div class="page settings-{{users[_session.userId].settings}}">
+    <div class="topic flex">
+      <p class="title settings">{{_page.room}}</p>
+      <input
+        placeholder="topic"
+        value="{{rooms[_page.room].topic}}"
+        disabled="{{users[_session.userId].team !== 'admin'}}"
+        >
+      <button id="toggle-fullscreen" class="settings-toggle"
+        title="Full Screen">
+        <span>^</span>
+      </button>
+      <label class="settings-toggle" title="Settings">
+        <input checked="{{users[_session.userId].settings}}" type="checkbox">
+        <span>*</span>
+      </label>
+    </div>
+    <div id="messages" class="messages" as="container" on-scroll="onScroll()">
+      <ul id="messages-list" as="list">
+        {{each _page.list as #message}}
+          <li><view name="message" user="{{users[#message.userId]}}"></view></li>
+        {{/each}}
+      </ul>
+    </div>
+    <div class="foot">
+      <view name="form" user="{{users[_session.userId]}}"></view>
+    </div>
+  </div>
+  <script x-no-minify>
+    // Scroll to bottom immediately on page render and on a resize
+    (window.onresize = function() {
+      var height = document.getElementById('messages-list').offsetHeight;
+      document.getElementById('messages').scrollTop = height;
+    })();
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement &&    // alternative standard method
+          !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+          document.documentElement.msRequestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+
+    document.getElementById('toggle-fullscreen')
+      .addEventListener('click', function(e){
+        toggleFullScreen();
+      }, false);
+  </script>
+
+<message:>
+  <div class="message bg-{{@user.team}}">
+    <p class="color-{{@user.team}}">
+      {{@user.team}}
+      &nbsp;
+      <span class="user">
+        {{@user.name}}
+      </span>
+      &nbsp;
+      {{_page.showTime && formatTime(#message)}}
+      &nbsp;
+      ({{formatGeo(#message)}})
+    </p>
+    <p class="comment">{{#message.comment}}</p>
+  </div>
+
+<form:>
+  <div class="bg-{{@user.team}}">
+    <div class="settings flex">
+      <input value="{{@user.name}}" placeholder="name" title="Name" class="color-{{@user.team}}" required>
+      <select class="team color-{{@user.team}}" title="Team"
+        data-maybe-disabled="{{@user.team !== 'neutral'}}">
+        {{each _page.roles as #team}}
+          <option value="{{#team}}" selected="{{@user.team === #team}}" class="bg-{{#team}} color-{{#team}}">{{#team}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <input type="hidden" value="{{@user.team}}" placeholder="team" class="color-{{@user.team}}">
+    <form id="new-comment" on-submit="add()">
+      <input value="{{_page.newComment}}" autofocus placeholder="message">
+    </form>
+  </div>
