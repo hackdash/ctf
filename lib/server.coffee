@@ -1,1 +1,1 @@
-require('derby-starter').run __dirname, {static: __dirname + '/public'}
+require('derby-starter').run __dirname, {port: 80, static: __dirname + '/public'}
